@@ -15,8 +15,7 @@ from keras import backend as K
 from itertools import cycle
 import math
 
-
-class CNNClsfTraining(gym.Env):
+class CNNClassifierTraining(gym.Env):
     """Environment where agent learns to select training parameters and
     architecture of a deep convolutional neural network
 
@@ -105,9 +104,6 @@ class CNNClsfTraining(gym.Env):
             # formula below encourages higher best validation
             reward += reward ** 2
 
-        # generate new data for the next training
-        self.generate_data()
-
         return self._get_obs(), reward, done, {}
 
     def _render(self, mode="human", close=False):
@@ -148,7 +144,7 @@ class CNNClsfTraining(gym.Env):
 
         # not using full dataset to make regularization more important and 
         # speed up testing a little bit
-        data_size = int(2000 * (1 - r) + 20000 * r)
+        data_size = int(2000 * (1 - r) + 40000 * r)
 
         # I do not use test data for validation, but last 10000 instances in dataset 
         # so that trained models can be compared to results in literature
@@ -204,7 +200,7 @@ class CNNClsfTraining(gym.Env):
         for val, use in convs.reshape((3, 2)):
 
             # Size of convolutional layer
-            cnvSz = int(val * 128)
+            cnvSz = int(val * 128)+1
 
             if use < 0.5:
                 continue
@@ -230,7 +226,7 @@ class CNNClsfTraining(gym.Env):
                 continue
 
             # choose fully connected layer size
-            densesz = int(1024 * val)
+            densesz = int(1024 * val)+1
 
             model.add(Dense(densesz,
                             W_regularizer=reg,

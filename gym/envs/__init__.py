@@ -259,9 +259,14 @@ register(
 )
 
 
-# Hyperparameter tuning
+# Parameter tuning
 # ----------------------------------------
 register(
     id='ConvergenceControl-v0',
     entry_point='gym.envs.parameter_tuning:ConvergenceControl',
+)
+
+register(
+    id='CNNClassifierTraining-v0',
+    entry_point='gym.envs.parameter_tuning:CNNClassifierTraining',
 )
