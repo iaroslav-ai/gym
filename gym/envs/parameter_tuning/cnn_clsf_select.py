@@ -225,7 +225,7 @@ class CNNClassifierTraining(gym.Env):
                 continue
 
             # choose fully connected layer size
-            densesz = int(512 * val)+1
+            densesz = int(1024 * val)+1
 
             model.add(Dense(densesz,
                             W_regularizer=reg,
