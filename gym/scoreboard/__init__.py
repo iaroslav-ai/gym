@@ -404,7 +404,7 @@ l1 and l2 penalty coefficients. Agent can select up to 5 layers of CNN and up to
 a dataset and a validation accuracy for every step.
 
 Datasets used are MNIST, CIFAR10, CIFAR100. Number of instances in datasets are
-chosen at random in range from around 100% to 10% such that adjustment of l1, l2
+chosen at random in range from around 100% to 5% such that adjustment of l1, l2
 penalty coefficients makes more difference.
 
 Some of the parameters of the dataset are not provided to the agent in order to make
