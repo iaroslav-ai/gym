@@ -41,7 +41,7 @@ class CNNClassifierTraining(gym.Env):
             spaces.Box(2, 8, 1),  # batch size
             spaces.Box(-6.0, 1.0, 1),  # l1 reg
             spaces.Box(-6.0, 1.0, 1),  # l2 reg
-            spaces.Box(0.0, 1.0, 3*2),  # convolutional layer parameters
+            spaces.Box(0.0, 1.0, 5*2),  # convolutional layer parameters
             spaces.Box(0.0, 1.0, 2*2),  # fully connected layer parameters
         ))
 
@@ -118,8 +118,7 @@ class CNNClassifierTraining(gym.Env):
         Observe the environment. Is usually used after the step is taken
         """
         # observation as per observation space 
-        return np.array([self.nb_classes,
-                         self.nb_inst,
+        return np.array([self.nb_inst,
                          self.previous_acc])
 
     def data_mix(self):
@@ -153,7 +152,7 @@ class CNNClassifierTraining(gym.Env):
         if dataset == "mnist":
             CX = np.expand_dims(CX, axis=1)
 
-        data = CX[:data_size], CY[:data_size], CX[-10000:], CY[-10000:];
+        data = CX[:data_size], CY[:data_size], CX[-10000:], CY[-10000:]
 
         return data, n_labels
 
@@ -197,7 +196,7 @@ class CNNClassifierTraining(gym.Env):
 
         has_convs = False
         # create all convolutional layers
-        for val, use in convs.reshape((3, 2)):
+        for val, use in convs.reshape((5, 2)):
 
             # Size of convolutional layer
             cnvSz = int(val * 128)+1
@@ -226,7 +225,7 @@ class CNNClassifierTraining(gym.Env):
                 continue
 
             # choose fully connected layer size
-            densesz = int(1024 * val)+1
+            densesz = int(512 * val)+1
 
             model.add(Dense(densesz,
                             W_regularizer=reg,
